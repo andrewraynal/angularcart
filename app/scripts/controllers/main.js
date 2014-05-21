@@ -1,24 +1,24 @@
 'use strict';
 (function() {
-  var app = angular.module('angularCartApp', []);
+  angular.module('angulacartApp');
 
-  app.controller('CartCtrl', function(){
-    this.products = gems;
+  app.controller('ProductCtrl', function(){
+    this.product = boards;
   });
 
-  app.controller('TabCtrl', function(){
+  app.controller('NavCtrl', function(){
     this.tab = 1;
 
-    this.setTab = function(tab){
-      this.tab = tab;
+    this.setNav = function(nav){
+      this.nav = nav;
     };
 
-    this.isSet = function(tab){
-      return (this.tab === tab);
+    this.isSet = function(nav){
+      return (this.nav === nav);
     };
   });
 
-  app.controller('GalleryCtrl', function(){
+  app.controller('ImgCtrl', function(){
     this.current = 0;
 
     this.setCurrent = function(index){
@@ -34,12 +34,19 @@
     };
   });
 
+  app.directive("productDescription", function() {
+    return {
+      restrict: "E",
+      templateUrl: "product-description.html"
+    };
+  });
+
   var boards = [
     {
       name: 'The Lovebird',
       description: "The Lovebird features a slightly narrower nose than most longboards, a subtle amount of tail rocker, a diamond tail with a bit of scoop on the deck, and a slight Vee to accentuate maneuverability.",
       price: 850,
-      images: [
+      image: [
         "images/lovebird.png"
       	],
       reviews: [{
@@ -55,7 +62,7 @@
       name: 'The Levitator',
       description: "The Levitator is a great all-around noserider.  It features a subtle step deck and a slightly wider outline than most longboards.  It's chock full of volume for float with plenty of stability and plenty of lift in the nose.",
       price: 1100,
-      images: [
+      image: [
         "images/levitator.gif"
       ],
       reviews: [{
@@ -67,7 +74,7 @@
       name: 'The Dharma',
       description: "The Dharma combines progressive surfing with the subtleties of a retro fish style.  According to Matt Calvani, it is Bing's best Folly Beach shortboard.  It has great early wave entry, is super maneuverable, and maintains speed.  With both a beveled rail and a concave deck, it combines rail sensitivity for quick turns and overall volume for down-the-line speed.",
       price: 1000,
-      images: [
+      image: [
         "images/dharma.jpg"
       ],
       reviews: [{

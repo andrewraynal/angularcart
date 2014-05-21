@@ -1,0 +1,21 @@
+.nav li {
+  display: inline;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.ng-invalid.ng-dirty {
+border-color: red;
+}
+
+.ng-valid.ng-dirty {
+border-color: green;
+}
+
+.btn {
+  border-radius: 50px;
+}
+
+#cart {
+  background-image: url(images/cover.jpeg);
+}

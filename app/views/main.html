@@ -1,107 +1,107 @@
-<div class="jumbotron" id="cart" ng-controller="CartCtrl as cart">
+<div class="container" ng-controller="CartCtrl">
+<div class="jumbotron" id="cart">
   <header>
     <h1 class="text-center">Board Store</h1>
-      <h2 class="text-center">- surf & paddle -</h2>
+    <h2 class="text-center">- surf & paddle -</h2>
   </header>
-    <div class="list-group">
-      <div class="list-group-item" ng-repeat="product in cart.products">
+   <!-- Product Display -->
+    <section class="list-group" ng-controller="ProductCtrl">
+      <div class="list-group-item" ng-repeat="product in cart.product">
         <h3>{{product.name}} <em class="pull-right">{{product.price | currency}}</em></h3>
-        <div ng-controller="GalleryCtrl as gallery" ng-show="product.images.length">
+        <article class="description">"{{product.description}}"</article>
+        <div ng-controller="ImgCtrl" ng-show="product.image.length">
           <div class="img-wrap">
-            <img ng-src="{{product.images[gallery.current]}}" />
+            <img ng-src="{{product.image[image.current]}}" />
           </div>
           <ul class="img-thumbnails clearfix">
-            <li class="small-image pull-left thumbnail" ng-repeat="image in product.images">
-            <img ng-src="{{image}}" />
+            <li class="small-image pull-left thumbnail" ng-repeat="image in product.image">
+            <img ng-src="{{product.image}}" />
             </li>
           </ul>
         </div>
-        <section ng-controller="TabCtrl as tab">
-          <ul class="nav nav-pills">
-            <li ng-class="{ active:tab.isSet(1) }">
-              <a href="" ng-click="tab.setTab(1)">Description</a>
-            </li>
-            <li ng-class="{ active:tab.isSet(2) }">
-              <a href="" ng-click="tab.setTab(2)">Specs</a>
-            </li>
-            <li ng-class="{ active:tab.isSet(3) }">
-              <a href="" ng-click="tab.setTab(3)">Reviews</a>
-            </li>
-          </ul>
-          <div ng-show="tab.isSet(1)">
-            <h4>Description</h4>
-            <blockquote>{{product.description}}</blockquote>
-          </div>
-          <div ng-show="tab.isSet(2)">
-            <h4>Specs</h4>
-            <blockquote>Shape: {{product.shape}}</blockquote>
-          </div>
-
-          <!--  Review Tab's Content  -->
-          <div ng-show="tab.isSet(3)">
-            <!--  Product Reviews List -->
-            <ul>
-              <h4>Reviews</h4>
-              <li ng-repeat="review in product.reviews">
-                <blockquote>
-                  <strong> {{review.stars}} Rating </strong>
-                  {{review.content}}
-                  <cite class="clearfix">—{{review.author}} on {{review.createdOn}}</cite>
-                </blockquote>
-              </li>
-            </ul>
-          </div>
-        </section>
+      </div>  
+    </section> 
+    <!-- End Product Display -->
+    <!-- Product Links and Content -->
+    <section ng-controller="NavCtrl">
+      <ul class="nav nav-pills">
+        <li ng-class="{ active:nav.isSet(1) }">
+          <a href="" ng-click="nav.setNav(1)">Description</a>
+        </li>
+        <li ng-class="{ active:nav.isSet(2) }">
+          <a href="" ng-click="nav.setNav(2)">Features</a>
+        </li>
+        <li ng-class="{ active:nav.isSet(3) }">
+          <a href="" ng-click="nav.setNav(3)">Reviews</a>
+        </li>
+      </ul>
+      <div ng-show="nav.isSet(1)">
+        <h4>Description</h4>
+        <blockquote ng-model="{{product.description}}"></blockquote>
       </div>
-      <section ng-init="tab = 1" ng-controller="NavCtrl as nav">
+      <div ng-show="nav.isSet(2)">
+        <h4>Features</h4>
+        <blockquote ng-model="{{product.description}}"></blockquote>
+      </div>
+      <div ng-show="nav.isSet(3)">
+        <h4>Board Reviews</h4>
+        <ul>
+          <li ng-repeat="review in product.review">
+            <blockquote>
+            <strong> {{review.stars}} Rating </strong>
+            {{review.content}}
+            <cite class="clearfix">— {{review.author}} -</cite>
+            </blockquote>
+          </li>
+        </ul>
+      </div>
+    </section>
+    <!-- End Product Product Links and Content -->
+</div>
+    <!--  Nav Buttons -->
+<section ng-init="nav = 1" ng-controller="NavCtrl">
   <ul class="nav">
-    <li ng-class="{ active: tab === 1}">
-      <button class="btn btn-primary">Description<a href ng-click="tab = 1"></a></button>
+    <li ng-class="{ active: nav === 1}">
+      <button class="btn btn-primary">Description<a href ng-click="nav = 1"></a></button>
     </li>
-   <li ng-class="{ active: tab === 2}">
-      <button class="btn btn-primary">Specs<a href ng-click="tab = 2"></a></button>
+    <li ng-class="{ active: nav === 2}">
+      <button class="btn btn-primary">Features<a href ng-click="nav = 2"></a></button>
     </li>
-    <li ng-class="{ active: tab === 3}">
-      <button class="btn btn-primary">Customer Reviews<a href ng-click="tab = 3"></a></button>
+    <li ng-class="{ active: nav === 3}">
+      <button class="btn btn-primary">Board Reviews<a href ng-click="nav = 3"></a></button>
     </li>
-      <ul class="review" ng-repeat="reviews">
-        <li class="rating"> Rating: {{reviews.rating}}</li>
-        <li class="content">{{reviews.content}}</li>
-        <li class="author">by: {{reviews.author}}</li>
-    </ul>
+  <ul class="review" ng-repeat="review">
+    <li class="rating"> Rating: {{review.stars}}</li>
+    <li class="content">{{review.content}}</li>
+    <li class="author">by: {{review.author}}</li>
   </ul>
+  </ul>
+</section>
   <!--  Review Form -->
-  <form name="reviewForm" ng-controller="ReviewCtrl" ng-submit="reviewForm.$valid && reviewCtrl.addReview(product)" novalidate>
+<form name="reviewForm" ng-controller="ReviewCtrl" ng-submit="reviewForm.$valid && ReviewCtrl.addReview(product)" novalidate>
   <h4>Submit a Review</h4>
   <fieldset class="form-group">
-  <select class="form-control" ng-model="review.stars" ng-options="stars for stars in [5,4,3,2,1]"  title="Stars" require>
-  <option value="">Rate the Product</option>
-  <option value="1">1</option>
-  <option value="2">2</option>
-  <option value="3">3</option>
-  <option value="4">4</option>
-  <option value="5">5</option>
-  </select>
+    <select class="form-control" ng-model="review.stars" ng-options="stars for stars in [5,4,3,2,1]"  title="Stars" require>
+      <option value="">Rate the Product</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
   </fieldset>
   <fieldset class="form-group">
-    <textarea ng-model="review.body" class="form-control" placeholder="Add a product review" title="Review"></textarea>
+    <textarea ng-model="review.content" class="form-control" placeholder="Add a product review" title="Review"></textarea>
   </fieldset>
   <fieldset class="form-group">
-    <input ng-model="review.author" type="email" class="form-control" placeholder="Enter email address" title="Email" />
+    <input ng-model="review.author" type="email" class="form-control" placeholder="Enter email address" title="Email" ng-valid="Email"/>
   </fieldset>
   <fieldset class="form-group">
     <input type="submit" class="btn btn-primary pull-right" value="Submit Review" require/>
   </fieldset>
 </form>
-</section>
- </div>
- 
 </div>
-  
-</div>
-
-
 
 <div class="footer">
-  <li><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+  <li><span class="glyphicon glyphicon-heart"></span> Owyeo owyeo yeoo yeoooo oh</p>
 </div>

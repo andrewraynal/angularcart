@@ -11,9 +11,9 @@ angular
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+        controller: 'ProductCtrl'
       })
       .otherwise({
-        redirectTo: '/'
+        redirectTo: 'http://theironyard.com/'
       });
   });
