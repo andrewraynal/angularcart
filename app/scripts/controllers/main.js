@@ -1,55 +1,19 @@
 'use strict';
 (function() {
-  angular.module('angulacartApp');
+  var angularcartApp = angular.module('angularcartApp');
 
-  app.controller('ProductCtrl', function(){
-    this.product = boards;
-  });
+  angularcartApp.controller('ProductCtrl', function($scope){
+    $scope.product = boards;
 
-  app.controller('NavCtrl', function(){
-    this.tab = 1;
-
-    this.setNav = function(nav){
-      this.nav = nav;
-    };
-
-    this.isSet = function(nav){
-      return (this.nav === nav);
-    };
-  });
-
-  app.controller('ImgCtrl', function(){
-    this.current = 0;
-
-    this.setCurrent = function(index){
-      this.current = index;
-    };
-  });
-
-  app.controller("ReviewCtrl", function(){
-    this.review = {};
-    this.addReview = function (product){
-      product.reviews.push(this.review);
-      this.review = {};
-    };
-  });
-
-  app.directive("productDescription", function() {
-    return {
-      restrict: "E",
-      templateUrl: "product-description.html"
-    };
-  });
-
-  var boards = [
+    var boards = [
     {
       name: 'The Lovebird',
       description: "The Lovebird features a slightly narrower nose than most longboards, a subtle amount of tail rocker, a diamond tail with a bit of scoop on the deck, and a slight Vee to accentuate maneuverability.",
       price: 850,
       image: [
         "images/lovebird.png"
-      	],
-      reviews: [{
+        ],
+      review: [{
         stars: 5,
         content: "sweeeeet ride!",
         author: "swayzee@surf.com",
@@ -65,8 +29,8 @@
       image: [
         "images/levitator.gif"
       ],
-      reviews: [{
-      	stars: 4,
+      review: [{
+        stars: 4,
         content: "cool, brah, but prrrriiiiiccceeeyyyyyyyyy",
         author: "BBBBO@brotown.com"
       }]
@@ -77,11 +41,47 @@
       image: [
         "images/dharma.jpg"
       ],
-      reviews: [{
+      review: [{
         stars: 5,
         content: "Love it!",
         author: "busyswimmer@water.com"
       }]
     }
   ];
+  });
+
+  angularcartApp.controller('NavCtrl', function($scope){
+    this.nav = 0;
+
+    this.setNav = function(nav){
+      this.nav = nav;
+    };
+
+    this.isSet = function(nav){
+      return (this.nav === nav);
+    };
+  });
+
+  angularcartApp.controller('ImgCtrl', function($scope){
+    $scope.current = 0;
+
+    this.setCurrent = function(index){
+      this.current = index;
+    };
+  });
+
+  angularcartApp.controller("ReviewCtrl", function($scope){
+    $scope.review = {};
+    this.addReview = function (product){
+      product.reviews.push(this.review);
+      this.review = {};
+    };
+  });
+
+  angularcartApp.directive("productDescription", function() {
+    return {
+      restrict: "E",
+      templateUrl: "views/product-description.html"
+    };
+  });
 })();

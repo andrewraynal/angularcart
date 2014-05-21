@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
   
-   <!--  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" /> -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
   
     <!-- build:css({.tmp,app}) styles/main.css -->
     <link rel="stylesheet" href="styles/andrew.css">
@@ -17,8 +17,7 @@
   </head>
   <body ng-app="angularcartApp">
     <!-- Add your site or application content here -->
-    <div class="container" ng-view="'views/main.html'">
-        <product-description ng-show="nav.isSet(1)"></product-description>
+    <div class="container" ng-view="'views/main.html'" ng-view="'views/product.html'">
         
     </div>
 
