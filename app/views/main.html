@@ -1,36 +1,107 @@
-<div class="header">
-  <ul class="nav nav-pills pull-right">
-    <li class="active"><a ng-href="#">Home</a></li>
-    <li><a ng-href="#">About</a></li>
-    <li><a ng-href="#">Contact</a></li>
+<div class="jumbotron" id="cart" ng-controller="CartCtrl as cart">
+  <header>
+    <h1 class="text-center">Board Store</h1>
+      <h2 class="text-center">- surf & paddle -</h2>
+  </header>
+    <div class="list-group">
+      <div class="list-group-item" ng-repeat="product in cart.products">
+        <h3>{{product.name}} <em class="pull-right">{{product.price | currency}}</em></h3>
+        <div ng-controller="GalleryCtrl as gallery" ng-show="product.images.length">
+          <div class="img-wrap">
+            <img ng-src="{{product.images[gallery.current]}}" />
+          </div>
+          <ul class="img-thumbnails clearfix">
+            <li class="small-image pull-left thumbnail" ng-repeat="image in product.images">
+            <img ng-src="{{image}}" />
+            </li>
+          </ul>
+        </div>
+        <section ng-controller="TabCtrl as tab">
+          <ul class="nav nav-pills">
+            <li ng-class="{ active:tab.isSet(1) }">
+              <a href="" ng-click="tab.setTab(1)">Description</a>
+            </li>
+            <li ng-class="{ active:tab.isSet(2) }">
+              <a href="" ng-click="tab.setTab(2)">Specs</a>
+            </li>
+            <li ng-class="{ active:tab.isSet(3) }">
+              <a href="" ng-click="tab.setTab(3)">Reviews</a>
+            </li>
+          </ul>
+          <div ng-show="tab.isSet(1)">
+            <h4>Description</h4>
+            <blockquote>{{product.description}}</blockquote>
+          </div>
+          <div ng-show="tab.isSet(2)">
+            <h4>Specs</h4>
+            <blockquote>Shape: {{product.shape}}</blockquote>
+          </div>
+
+          <!--  Review Tab's Content  -->
+          <div ng-show="tab.isSet(3)">
+            <!--  Product Reviews List -->
+            <ul>
+              <h4>Reviews</h4>
+              <li ng-repeat="review in product.reviews">
+                <blockquote>
+                  <strong> {{review.stars}} Rating </strong>
+                  {{review.content}}
+                  <cite class="clearfix">—{{review.author}} on {{review.createdOn}}</cite>
+                </blockquote>
+              </li>
+            </ul>
+          </div>
+        </section>
+      </div>
+      <section ng-init="tab = 1" ng-controller="NavCtrl as nav">
+  <ul class="nav">
+    <li ng-class="{ active: tab === 1}">
+      <button class="btn btn-primary">Description<a href ng-click="tab = 1"></a></button>
+    </li>
+   <li ng-class="{ active: tab === 2}">
+      <button class="btn btn-primary">Specs<a href ng-click="tab = 2"></a></button>
+    </li>
+    <li ng-class="{ active: tab === 3}">
+      <button class="btn btn-primary">Customer Reviews<a href ng-click="tab = 3"></a></button>
+    </li>
+      <ul class="review" ng-repeat="reviews">
+        <li class="rating"> Rating: {{reviews.rating}}</li>
+        <li class="content">{{reviews.content}}</li>
+        <li class="author">by: {{reviews.author}}</li>
+    </ul>
   </ul>
-  <h3 class="text-muted">angularcart</h3>
+  <!--  Review Form -->
+  <form name="reviewForm" ng-controller="ReviewCtrl" ng-submit="reviewForm.$valid && reviewCtrl.addReview(product)" novalidate>
+  <h4>Submit a Review</h4>
+  <fieldset class="form-group">
+  <select class="form-control" ng-model="review.stars" ng-options="stars for stars in [5,4,3,2,1]"  title="Stars" require>
+  <option value="">Rate the Product</option>
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+  <option value="5">5</option>
+  </select>
+  </fieldset>
+  <fieldset class="form-group">
+    <textarea ng-model="review.body" class="form-control" placeholder="Add a product review" title="Review"></textarea>
+  </fieldset>
+  <fieldset class="form-group">
+    <input ng-model="review.author" type="email" class="form-control" placeholder="Enter email address" title="Email" />
+  </fieldset>
+  <fieldset class="form-group">
+    <input type="submit" class="btn btn-primary pull-right" value="Submit Review" require/>
+  </fieldset>
+</form>
+</section>
+ </div>
+ 
+</div>
+  
 </div>
 
-<div class="jumbotron">
-  <h1>'Allo, 'Allo!</h1>
-  <p class="lead">
-    <img src="images/yeoman.png" alt="I'm Yeoman"><br>
-    Always a pleasure scaffolding your apps.
-  </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#">Splendid!<span class="glyphicon glyphicon-ok"></span></a></p>
-</div>
 
-<div class="row marketing">
-  <h4>HTML5 Boilerplate</h4>
-  <p>
-    HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.
-  </p>
-
-  <h4>Angular</h4>
-  <p>
-    AngularJS is a toolset for building the framework most suited to your application development.
-  </p>
-
-  <h4>Karma</h4>
-  <p>Spectacular Test Runner for JavaScript.</p>
-</div>
 
 <div class="footer">
-  <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+  <li><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
 </div>
